@@ -1,0 +1,53 @@
+#whole-page{
+  min-height: -webkit-fill-available;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+}
+
+#content-container{
+  margin:auto;
+  height:75vh;
+  width:90vw;
+}
+
+.custom-div {
+  width: 100%;
+}
+
+#ten {
+  height: 3vh;
+}
+
+#fifty {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  height: 38vh;
+}
+
+#fourty {
+  height: 33.5vh;
+  display: flex;
+  align-items: center;
+}
+
+.fifty-img{
+  max-height:37vh;
+}
+
+a{
+  text-decoration:none;
+}
+
+.alert{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  height:7vh;
+}
+
+#message{
+  display:none;
+}

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='register.css')}}">
+    <title>Register</title>
+  </head>
+  <body>
+    {% if message %}
+      <p id="message">{{message}}<p>
+    {% endif %}
+    <div id="whole-page">
+      <div id="content-container" class="container bg-white shadow">
+        
+        <div id="ten" class="custom-div">
+          <div class="row">
+            <div class="col-2 text-center bg-white border-bottom border-right">
+              <small>
+                <a href="{{url_for('login')}}" class="link-dark">Login</a>
+              </small>
+            </div>
+            <div class="col-3 text-center bg-primary">
+              <small>
+                <a href="{{url_for('register')}}" class="link-light">Register</a>
+              </small>
+            </div>
+          </div>
+        </div>
+        
+        <div id="fifty" class="custom-div">
+          <img class="fifty-img" src="{{url_for('static', filename='tennis_ball.png')}}">
+        </div>
+
+        <div id="fourty" class="w-100">
+          <form method="POST" action="{{ url_for('register') }}" class="h-100 w-100">
+            <div class="container d-flex justify-content-between align-items-middle h-100">
+             
+              <div class="row">
+                <div class="col-6">
+                  <input type="text" name="fname" class="form-control" placeholder="First Name:" required id="fname_inp">
+                </div>
+                <div class="col-6">
+                  <input type="text" name="lname" class="form-control" placeholder="Last Name:" required id="lname_inp">
+                </div
+              </div>
+              <div class="col-12 text-center" id="name_instructions">
+                <small>First Name Must Be At Least 3 Characters</small>
+              </div>
+              
+              <div class="col-12">
+                <input type="email" class="form-control w-100" name="email" placeholder="Email:" required id="email_inp">
+              </div>
+              <div class="col-12 text-center" id="email_instructions">
+                <small>Invalid Email!</small>
+              </div>
+              
+              <div class="col-12">
+                <input type="password" class="form-control w-100" name="password" placeholder="Password:" required id="password_inp">
+              </div>
+              <div class="col-12 text-center" id="password_instructions">
+                <small>Passwords must be 8-16 characters, containing at least 1 digit and 1 capital letter</small>
+              </div>
+
+              <div class="col-12">
+                  <input type="password" class="form-control w-100" name="confirm_password" placeholder="Confirm Password:" required id="confirm_pass_inp">
+              </div>
+              <div class="col-12 text-center" id="confirm_pword_instructions">
+                <small>Passwords do not match!</small>
+              </div>
+              <div class="col-12 text-center" id="terms_conditions">
+                <small>Please Review The <span class="text-danger" data-bs-toggle="modal" data-bs-target="#tnc_modal">Terms & Conditions</span> Before Registering</small>
+              </div>
+              <div class="row">
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn btn-primary text-center" id="register_btn" disabled >Register</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="tnc_modal" tabindex="-1" aria-labelledby="tnc_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Terms & Conditions</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>These terms and conditions ("Terms") govern your use of the website ("Website") provided by WSSCC Tennis Clude, hereinafter referred to as "we," "us," or "our." By signing up and using the Website, you agree to comply with and be bound by these Terms. Please read these Terms carefully before proceeding with your registration. If you do not agree with any part of these Terms, do not proceed with the registration process.</br></br>1. Registration and Account:</br>1.1. During the registration process, you will be required to provide accurate and up-to-date information, including your first name, last name, and a valid email address.</br>1.2. You are responsible for maintaining the confidentiality of your account information and password associated with your email address. You agree to notify us immediately of any unauthorized use of your account or any other security breach.</br></br>2. Data Privacy and Security:</br>2.1. We collect and store your first name, last name, and email address solely for the purpose of providing our tennis court booking services.</br>2.2. We are committed to protecting your data and maintaining its security. Your information will not be shared with any third parties, except as required by law or as necessary to provide the services you have requested.</br></br>3. Service Usage:</br>3.1. The Website is intended solely for booking tennis courts. Any other use of the Website is strictly prohibited.3.2. You agree not to use the Website for any unlawful, abusive, or unauthorized purposes.</br>3.3. You agree not to interfere with or disrupt the operation of the Website or its associated services.</br></br>4. Intellectual Property:</br>4.1. All content, logos, trademarks, and other intellectual property on the Website are the property of their respective owners and protected by applicable copyright and intellectual property laws.</br></br>4.2. You may not use, reproduce, modify, or distribute any content from the Website without our prior written consent.</br></br>5. Disclaimer of Liability:</br>5.1. We strive to provide accurate and up-to-date information on the Website, but we make no warranties or representations regarding the accuracy, reliability, or completeness of the information provided.</br>5.2. We shall not be liable for any direct, indirect, incidental, or consequential damages arising out of or in connection with the use of the Website or the services provided.</br></br>6. Modifications to Terms:</br>6.1. We reserve the right to modify these Terms at any time without prior notice.</br>6.2. It is your responsibility to review these Terms periodically for any changes. Continued use of the Website after any modifications indicate your acceptance of the updated Terms.</br></br>7. Termination:</br>7.1. We reserve the right to suspend or terminate your account and access to the Website at any time, for any reason, without prior notice.</br></br>8. Governing Law and Jurisdiction:</br>8.1. These Terms shall be governed by and construed in accordance with the laws of the United Kingdom.</br>8.2. Any disputes arising under these Terms shall be subject to the exclusive jurisdiction of the courts of the United Kingdom.</br></br>By proceeding with the registration process, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger dis-agree-btn" data-bs-dismiss="modal" value="disagree">Disagree</button>
+            <button type="button" class="btn btn-success dis-agree-btn" data-bs-dismiss="modal" value="agree">Agree</button>
+          </div>
+        </div>
+      </div>
+    </div>    
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto">Account Creation</strong>
+          <small>Just Now</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-white" id="toast-body">
+        </div>
+      </div>
+    </div>
+    
+    <script src="{{url_for('static', filename='register.js')}}"></script>
+  </body>
+</html>
+
+
+

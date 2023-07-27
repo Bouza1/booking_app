@@ -1,0 +1,18 @@
+.datepicker-dropdown {
+  width: 20rem;
+  height: 20rem;
+}
+
+.datepicker table{
+  width:20rem;
+  height:20rem;
+  text-align:center;
+}
+
+.page-container{
+  max-height:100vhz;
+}
+
+#hidden_u, #password_instructions, #confirm_pword_instructions, #delete_warning, #message{
+  display:none;
+}

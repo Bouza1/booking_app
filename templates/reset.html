@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
+    <title>Password Reset</title>
+  </head>
+  <body>
+    <div id="whole-page">
+      <div id="content-container" class="container bg-white shadow">
+        
+        <div id="ten" class="custom-div">
+          <p id="hidden_tok">{{token}}</p>
+        </div>
+        
+        <div id="fifty" class="custom-div">
+          <img class="fifty-img" src="{{url_for('static', filename='tennis_ball.png')}}">
+        </div>
+        
+        <div id="fourty" class="w-100">
+          <form method="POST" action="{{ url_for('change_password') }}" class="h-75 w-100"> 
+            <div class="container d-flex flex-column justify-content-between align-items-middle h-100">      
+              <div class="col-12">
+                <input type="password" class="form-control w-100" name="password" placeholder="New Password:" required id="password_inp">
+              </div>
+              <div class="col-12 text-center" id="password_instructions">
+                <small>Passwords must be 8-16 characters, containing at least 1 digit and 1 capital letter</small>
+              </div>
+              <div class="col-12">
+                  <input type="password" class="form-control w-100" name="confirm_password" placeholder="Confirm Password:" required id="confirm_pass_inp">
+              </div>
+              <input type="name" class="hidden" value="{{token}}" name="token" id="hidden_tok">
+              <div class="col-12 text-center" id="confirm_pword_instructions">
+                <small>Passwords do not match!</small>
+              </div>
+              <div class="row">
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn btn-primary w-25 text-center" id="reset_btn" disabled>Reset</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+    <script src="{{url_for('static', filename='reset.js')}}"></script>
+  </body>
+</html>
+
+<!-- https://tennisbooking.s4820791.repl.co/api/reset/rQmmGeS-zxrABMx2KEWtFw-g9Y-VzAiepM1F_1nONZs -->

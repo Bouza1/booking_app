@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename='login.css')}}">
+    <title>Login</title>
+  </head>
+  <body>
+    {% if message %}
+      <p id="message">{{message}}<p>
+    {% endif %}
+    <div id="whole-page">
+      <div id="content-container" class="container bg-white shadow">
+        
+        <div id="ten" class="custom-div">
+          <div class="row">
+            <div class="col-2 text-center bg-primary">
+              <small>
+                <a href="{{url_for('login')}}" class="link-light">Login</a>
+              </small>
+            </div>
+            <div class="col-3 text-center bg-white border-bottom border-right">
+              <small>
+                <a href="{{url_for('register')}}" class="link-dark">Register</a>
+              </small>
+            </div>
+          </div>
+        </div>
+        
+        <div id="fifty" class="custom-div">
+          <img class="fifty-img" src="{{url_for('static', filename='tennis_ball.png')}}">
+        </div>
+
+    
+        <div id="fourty" class="w-100">
+          <form method="POST" action="{{ url_for('login') }}" class="h-75 w-100">
+            <div class="container d-flex flex-column justify-content-between align-items-middle h-100">
+              <input type="text" name="username" class="form-control" id="username" placeholder="Username:">
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password:">
+              <div class="row">
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn btn-primary w-25 text-center" id="login-btn" disabled>Login</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 text-center">
+                  <small class="text-muted">Forgotten Details? <span class="text-danger" id="resestBtn" data-bs-toggle="modal" data-bs-target="#reset_modal">Reset</span></small>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="reset_modal" tabindex="-1" aria-labelledby="reset_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Password Reset</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="lead">Please Enter Your Email Address:</p>
+            <input type="text" name="username_reset" class="form-control" id="username_reset" placeholder="Email:">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" value="reset" id="reset_email_btn" disabled>Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto" id="toast-title"></strong>
+          <small>Just Now</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-white" id="toast-body">
+        </div>
+      </div>
+    </div>
+    <script src="{{url_for('static', filename='login.js')}}"></script>
+  </body>
+</html>

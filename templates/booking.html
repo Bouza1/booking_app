@@ -1,0 +1,124 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{url_for('static', filename='booking.css')}}">
+    <title>Admin Dashboard</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+      <a class="navbar-brand mx-2" href="#">WSSCC</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light mx-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{firstname}}
+          </a>
+          <div class="dropdown-menu position-absolute dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown">
+            <p class="dropdown-item btn btn-md btn-outline-light" data-bs-toggle="modal" data-bs-target="#change_pword_modal">Change Password</p>
+            <p class="dropdown-item btn btn-md btn-outline-light" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete Account</p>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{url_for('logout')}}">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </nav>  
+    {% if message %}
+      <p id="message">{{message}}<p>
+    {% endif %}
+    <div class="container page-container mt-2 h-75">
+      <div class="row">
+        <div class="col-12 text-center text-dark mt-2">
+          <input type="date" class="w-25 text-center" id="date" onchange="get_times()">
+        </div>
+      </div>
+      <div class="container mt-4">
+        <div class="row h-100 container d-flex justify-content-center">
+          <div class="col-sm-12 col-lg-8 text-center text-light d-flex flex-column justify-content-between">
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="7:00am" id="7">7:00am</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="8:00am" id="8">8:00am</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="9:00am" id="9">9:00am</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="10:00am" id="10">10:00am</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="11:00am" id="11">11:00am</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="12:00pm" id="12">12:00pm</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="13:00pm" id="13">13:00pm</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="14:00pm" id="14">14:00pm</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="15:00pm" id="15">15:00pm</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="16:00pm" id="16">16:00pm</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="17:00pm" id="17">17:00pm</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="18:00pm" id="18">18:00pm</button>
+            <button class="btn btn-sm btn-primary shadow w-100 book-btn" value="19:00pm" id="19">19:00pm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <strong class="me-auto" id="toast-title"></strong>
+          <small>Just Now</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body bg-white" id="toast-body">
+        </div>
+      </div>
+    </div>
+
+    <!-- password change modal -->
+    <div class="modal fade" id="change_pword_modal" tabindex="-1" aria-labelledby="change_pword_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-scrollable modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Change Password</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <input type="password" name="new_pword" class="form-control" id="new_pword" placeholder="New Password:">
+            <div class="col-12 text-center" id="password_instructions">
+              <small>Passwords must be 8-16 characters, containing at least 1 digit and 1 capital letter</small>
+              </div>
+            <input type="password" name="change_pword" class="form-control mt-2" id="confirm_pass_inp" placeholder="Change Password:">
+            <div class="col-12 text-center" id="confirm_pword_instructions">
+              <small>Passwords do not match!</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-bs-dismiss="modal" value="reset" id="change_pword_btn" disabled>Change</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="delete_modal" tabindex="-1" aria-labelledby="delete_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-scrollable modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Account</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p class="lead">Please enter your password to delete account.</p>
+            <form method="POST" action="{{url_for('delete_account')}}">
+              <input type="password" id="delete_pword" name="delete_pword" class="form-control" placeholder="Password:">
+              <small class="text-muted text-center mt-2" id="delete_warning"> This process is irreversible and all data held will be deleted.</small>
+              <button type="submit" class="btn btn-danger" value="reset" id="final_delete_btn" disabled>Delete</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+ 
+          </div>
+        </div>
+      </div>
+    </div>
+    <p id="hidden_u">{{username}}</p>
+    <script src="{{url_for('static', filename='booking.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+  
+
+
+
