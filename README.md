@@ -8,7 +8,7 @@ A light-weight application to facilitate the booking of a local tennis court.
 
 Please Visit: [Live Site](https://tennisbooking.s4820791.repl.co)
 
-### Frameworks:
+## Frameworks:
 - HTML
 - CSS
 - Javascript
@@ -17,4 +17,8 @@ Please Visit: [Live Site](https://tennisbooking.s4820791.repl.co)
   - Flask
   - SQLite3
 
+## Mobile Friendly
 
+| Mobile | Desktop|
+| --- | --- |
+| <img src="https://github.com/Bouza1/booking_app/assets/97123953/ba70aab9-c69f-4de8-95c5-32751b76c621" width="500px" height="550px"> | <img src="https://github.com/Bouza1/booking_app/assets/97123953/8c6e8d7f-f727-4ef6-b9bc-e9054c5c272b" alt="Tennis Club Logo" width="800px"> |
