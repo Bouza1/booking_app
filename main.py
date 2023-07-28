@@ -37,7 +37,7 @@ def logout():
 def booking():
   if not session.get('logged_in'):
     return redirect(url_for('login'))
-  return render_template('booking.html', username=session['username'], firstname=session['firstname'])
+  return render_template('booking.html', username=aes_encrypt(session['username']), firstname=session['firstname'])
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -68,8 +68,7 @@ def get_times():
 def book_slot():
   if request.is_json:
     booking_object = request.get_json()
-    insert_booking_2_db(booking_object['date'], booking_object['time'],
-                        session['username'], booking_object['cancel'])
+    insert_booking_2_db(booking_object['date'], booking_object['time'], aes_encrypt(session['username']), booking_object['cancel'])
     return {"message": "Booked!"}
 
 

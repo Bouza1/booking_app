@@ -146,12 +146,29 @@ function show_booking_toast(booking_obj) {
   let toastBody = document.getElementById("toast-body")
   toastBody.innerHTML = ""
   let booking_p = document.createElement('p')
-  let till = Number(booking_obj['time'])+1
-  booking_p.innerText ="Court Booked: " + booking_obj['time'] + " - " + till + " !"
+  booking_p.innerText = return_time_string(booking_obj['time'])
   toastBody.appendChild(booking_p)
   const myToast = new bootstrap.Toast(toastElement);
   myToast.show();
   }
+}
+
+function return_time_string(starting_time){
+  let holder_1 = Number(starting_time);
+  let start_time = "";
+  let end_time = "";
+  if(holder_1 <= 11){
+    start_time = starting_time + ":00am"
+  } else{
+    start_time = starting_time + ":00pm"
+  }
+  let till = Number(starting_time)+1
+  if(till <= 11){
+    end_time = till + ":00am"
+  } else{
+    end_time = till + ":00pm"
+  }
+  return "Court Booked: " + start_time + " - " + end_time + "!"
 }
 
 let password_inp = document.getElementById('new_pword')
