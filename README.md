@@ -20,4 +20,4 @@ Please Visit: [Live Site](https://tennisbooking.s4820791.repl.co)
 
 | Mobile | Desktop|
 | --- | --- |
-| <img src="https://github.com/Bouza1/booking_app/assets/97123953/ba70aab9-c69f-4de8-95c5-32751b76c621" width="420px">| a |
+| <img src="https://github.com/Bouza1/booking_app/assets/97123953/ba70aab9-c69f-4de8-95c5-32751b76c621" width="420px">| <img src="https://github.com/Bouza1/booking_app/assets/97123953/70d37039-c173-4e20-9450-dfefbf845178" width="420px"> |
