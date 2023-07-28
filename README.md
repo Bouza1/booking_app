@@ -8,17 +8,16 @@ A light-weight application to facilitate the booking of a local tennis court.
 
 Please Visit: [Live Site](https://tennisbooking.s4820791.repl.co)
 
-## Frameworks:
-- HTML
-- CSS
-- Javascript
-- Bootstrap
-- Python
-  - Flask
-  - SQLite3
+## Built With:
+- ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+- ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+- ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+- ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+- ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+- ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
 
 ## Mobile Friendly
 
 | Mobile | Desktop|
 | --- | --- |
-| <img src="https://github.com/Bouza1/booking_app/assets/97123953/ba70aab9-c69f-4de8-95c5-32751b76c621" width="500px" height="550px"> | <img src="https://github.com/Bouza1/booking_app/assets/97123953/8c6e8d7f-f727-4ef6-b9bc-e9054c5c272b" alt="Tennis Club Logo" width="800px"> |
+| <img src="https://github.com/Bouza1/booking_app/assets/97123953/ba70aab9-c69f-4de8-95c5-32751b76c621" width="420px">| a |
