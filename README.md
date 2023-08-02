@@ -1,8 +1,9 @@
 # Tennis Court Booking App!
 <div align="center" style="width:100%;">
- <img src="https://github.com/Bouza1/booking_app/assets/97123953/ad9f73c9-35bf-42ec-be01-4d2c8bbf1a99" alt="Tennis Club Logo" height="100%">
+ <img src="https://github.com/Bouza1/booking_app/assets/97123953/ad9f73c9-35bf-42ec-be01-4d2c8bbf1a99" alt="Tennis Club Logo" width="100%">
 </div>
 
+<img src="https://github.com/Bouza1/booking_app/assets/97123953/270f0be5-40fa-4e49-bc24-a52e57178581" >
 
 
 ## Description
