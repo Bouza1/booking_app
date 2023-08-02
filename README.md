@@ -1,7 +1,9 @@
 # Tennis Court Booking App!
 <div align="center" style="width:100%;">
-  <img src="https://github.com/Bouza1/booking_app/assets/97123953/a755f73a-14c9-4820-82c7-886a1f1ddfc7" alt="Tennis Club Logo" width="420px" height="500px">
+ <img src="https://github.com/Bouza1/booking_app/assets/97123953/ad9f73c9-35bf-42ec-be01-4d2c8bbf1a99" alt="Tennis Club Logo" height="100%">
 </div>
+
+
 
 ## Description
 A light-weight, user-friendly tennis court booking application that enables users to easily log in and reserve tennis courts. The app streamlines the booking process and is built with a secure login system and an intuitive interface. Reserving a tennis court has never been simpler. 
