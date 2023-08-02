@@ -24,7 +24,7 @@ Please Visit: [www.wsscctennis.co.uk](https://www.wsscctennis.co.uk) to see the 
 | <img src="https://github.com/Bouza1/booking_app/assets/97123953/0d97e34a-8bcd-4ef6-a8da-47393d8e6b85"> | <img src="https://github.com/Bouza1/booking_app/assets/97123953/5df92114-488d-4b4a-827f-4123a2faf4df"> |
 
 ## Security:
-The use of an SQLite database brings with it some sercurity flaws and vulnerabillites. To address these concerns and enhance the security of the data being stored, a mitigation approach has been adopted, which involves encrypting all the data using the Advanced Encryption Standard (AES).
+The use of an SQLite database brings with it some security flaws and vulnerabillites. To address these concerns and enhance the security of the data being stored, a mitigation approach has been adopted, which involves encrypting all data being stored by using the Advanced Encryption Standard (AES).
 
 ## Future Developments
 The next stage of development is to intergrate a PostgreSQL database and deploy to and EC2 instance on AWS.
