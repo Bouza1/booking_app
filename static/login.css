@@ -1,5 +1,5 @@
 #whole-page{
-  min-height: -webkit-fill-available;
+  min-height: 100svh;
   display: flex;
   justify-content: center; 
   align-items: center;

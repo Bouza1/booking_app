@@ -1,7 +1,8 @@
 import sqlite3
-# from utils.config import encrypt
+import os
+from utils.config import aes_decrypt
 
-DATABASE = 'tennis.db'
+DATABASE = aes_decrypt(os.environ['DB_LOC'])
 
 def init_db():
   conn = sqlite3.connect(DATABASE)
@@ -12,7 +13,8 @@ def init_db():
   c.execute('''CREATE TABLE IF NOT EXISTS users
   (id TEXT PRIMARY KEY,
   first_name TEXT NOT NULL,
-  last_name TEXT NOT NULL )''')
+  last_name TEXT NOT NULL,
+  role TEXT NOT NULL)''')
   c.execute('''CREATE TABLE IF NOT EXISTS calender
   (id INTEGER PRIMARY KEY AUTOINCREMENT,
   date TEXT NOT NULL,
@@ -41,6 +43,7 @@ def reset_db():
   drop_table('security')
   drop_table('calender')
   drop_table('users')
+  init_db()
 
 def drop_table(table):
   conn = sqlite3.connect(DATABASE)
@@ -70,10 +73,10 @@ def return_user_object(username):
   user = get_user_details(username)
   user_obj = {
     "firstname":user[1],
-    "lastname":user[2]
+    "lastname":user[2],
+    "role":user[3]
   }
   return user_obj
-
 
 def save_user_security(username, hashed_password):
   conn = sqlite3.connect(DATABASE)
@@ -82,10 +85,10 @@ def save_user_security(username, hashed_password):
   conn.commit()
   conn.close()
 
-def save_user_details(id, first_name, last_name):
+def save_user_details(id, first_name, last_name, role):
   conn = sqlite3.connect(DATABASE)
   c = conn.cursor()
-  c.execute("INSERT INTO users (id, first_name, last_name) VALUES (?, ?, ?)", (id,first_name, last_name))
+  c.execute("INSERT INTO users (id, first_name, last_name, role) VALUES (?, ?, ?, ?)", (id,first_name, last_name, role))
   conn.commit()
   conn.close()
 
@@ -190,3 +193,4 @@ def delete_from_table(table, username):
   c.execute(f'DELETE FROM {table} WHERE id = ?', (username,))
   conn.commit()
   conn.close()
+

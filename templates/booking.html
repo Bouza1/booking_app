@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -18,12 +19,15 @@
           <div class="dropdown-menu position-absolute dropdown-menu-end dropdown-menu-dark" aria-labelledby="navbarDropdown">
             <p class="dropdown-item btn btn-md btn-outline-light" data-bs-toggle="modal" data-bs-target="#change_pword_modal">Change Password</p>
             <p class="dropdown-item btn btn-md btn-outline-light" data-bs-toggle="modal" data-bs-target="#delete_modal">Delete Account</p>
+            {% if role == 'admin' %}
+              <p class="dropdown-item btn btn-md btn-outline-light" id="backup_token_btn">Backup Token</p>
+            {% endif %}
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{url_for('logout')}}">Logout</a>
           </div>
         </li>
       </ul>
-    </nav>  
+    </nav>
     {% if message %}
       <p id="message">{{message}}<p>
     {% endif %}
@@ -65,7 +69,6 @@
         </div>
       </div>
     </div>
-
     <!-- password change modal -->
     <div class="modal fade" id="change_pword_modal" tabindex="-1" aria-labelledby="change_pword_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
       <div class="modal-dialog modal-dialog-scrollable modal-md">
@@ -85,11 +88,12 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-success" data-bs-dismiss="modal" value="reset" id="change_pword_btn" disabled>Change</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" value="reset" id="change_pword_btn" disabled>Change</button>
           </div>
         </div>
       </div>
     </div>
+    <!-- delete account modal -->
     <div class="modal fade" id="delete_modal" tabindex="-1" aria-labelledby="delete_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
       <div class="modal-dialog modal-dialog-scrollable modal-md">
         <div class="modal-content">
@@ -102,11 +106,12 @@
             <form method="POST" action="{{url_for('delete_account')}}">
               <input type="password" id="delete_pword" name="delete_pword" class="form-control" placeholder="Password:">
               <small class="text-muted text-center mt-2" id="delete_warning"> This process is irreversible and all data held will be deleted.</small>
-              <button type="submit" class="btn btn-danger" value="reset" id="final_delete_btn" disabled>Delete</button>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-center mt-2">
+                  <button type="submit" class="btn btn-danger" value="reset" id="final_delete_btn" disabled>Delete</button>
+                </div>
+              </div>
             </form>
-          </div>
-          <div class="modal-footer">
- 
           </div>
         </div>
       </div>

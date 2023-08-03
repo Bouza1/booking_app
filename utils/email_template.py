@@ -87,8 +87,8 @@ template = """
           <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
           <tr>
               <td align="center" valign="top" style="padding: 10px 10px;">
-              <a href="https://tennisbooking.s4820791.repl.co" target="_blank" style="display: inline-block;">
-                  <img src="https://tennisbooking.s4820791.repl.co/static/tennis_ball.png" alt="Logo" border="0" width="100" style="display: block; width: 60px; max-width: 100px; min-width: 100px;">
+              <a href="https://https://wsscctennis.co.uk/" target="_blank" style="display: inline-block;">
+                  <img src="https://wsscctennis.co.uk/static/tennis_ball.png" alt="Logo" border="0" width="100" style="display: block; width: 60px; max-width: 100px; min-width: 100px;">
               </a>
               </td>
           </tr>
@@ -175,7 +175,7 @@ template = """
           <tr>
               <td align="center" bgcolor="#e9ecef" style="padding: 12px 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 20px; color: #666;">
               <p style="margin: 0;">You received this email because we received a request for a password reset for your account.</p>
-              <p style="margin: 0;"> If you didn't create request a password reset link with <a href="https://tennisbooking.s4820791.repl.co/">WSSCC</a>, please contact us immediatetly</p>
+              <p style="margin: 0;"> If you didn't create request a password reset link with <a href="https://wsscctennis.co.uk/">WSSCC</a>, please contact us immediatetly</p>
               </td>
           </tr>
           <!-- end permission -->

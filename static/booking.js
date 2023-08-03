@@ -37,19 +37,24 @@ function set_min_max_dates(){
   date_inp.max = formattedThirtyDaysFromNow;
 }
 
-
-function get_times_from_server(date){
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function(){
-  if(xhttp.status == 200 && xhttp.readyState == 4 ) {
-    content = JSON.parse(xhttp.response);
-    create_buttons(content['times'][0]);
+async function get_times_from_server(date) {
+  try {
+    const response = await fetch('/api/times_booked', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ "date": date })
+    });
+    if (response.ok) {
+      const content = await response.json();
+      create_buttons(content['times'][0]);
+    } else {
+      throw new Error('Failed to get times');
     }
-  };
-  xhttp.open("PUT", "/api/times_booked", true);
-  let datee = JSON.stringify({"date":date});
-  xhttp.setRequestHeader("Content-Type", "application/json");
-  xhttp.send(datee);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
 function return_button_array(){
@@ -118,22 +123,27 @@ function create_booking_object(time, cancel){
   return dateTimeObj
 }
 
-function send_booking_to_server(time, cancel){
-  let booking_obj = create_booking_object(time, cancel)
-  show_booking_toast(booking_obj)
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function(){
-  if(xhttp.status == 200 && xhttp.readyState == 4 ) {
-    content = JSON.parse(xhttp.response);
-    get_times();
+async function send_booking_to_server(time, cancel) {
+  let booking_obj = create_booking_object(time, cancel);
+  show_booking_toast(booking_obj);
+  try {
+    const response = await fetch('/api/book_slot', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(booking_obj)
+    });
+    if (response.ok) {
+      const content = await response.json();
+      get_times();
+    } else {
+      throw new Error('Failed to book slot');
     }
-  };
-  xhttp.open("PUT", "/api/book_slot", true);
-  let obj = JSON.stringify(booking_obj);
-  xhttp.setRequestHeader("Content-Type", "application/json");
-  xhttp.send(obj);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
-
 
 function show_booking_toast(booking_obj) {
   if(booking_obj['cancel']){
@@ -203,8 +213,10 @@ function if_both(){
   let change_btn = document.getElementById('change_pword_btn')
   if(check_passw('new_pword') && check_confirm_passw()){
     change_btn.disabled = false;
+    change_btn.setAttribute('class', "btn btn-success")
   } else {
     change_btn.disabled = true;
+    change_btn.setAttribute('class', "btn btn-danger")
   }
 }
 
@@ -240,20 +252,29 @@ function clear_inputs(){
 }
 change_btn.addEventListener('click', send_change_2_server)
 
-function send_change_2_server(){
-  let password = document.getElementById('new_pword').value
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function(){
-  if(xhttp.status == 200 && xhttp.readyState == 4 ) {
-    content = JSON.parse(xhttp.response);
-    clear_inputs();
-    show_toast(content);
+async function send_change_2_server() {
+  let password = document.getElementById('new_pword').value;
+  let obj = JSON.stringify({ "password": password });
+  try {
+    const response = await fetch('/api/reset_password', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: obj
+    });
+
+    if (response.ok) {
+      const content = await response.json();
+      clear_inputs();
+      if_both();
+      show_toast(content);
+    } else {
+      throw new Error('Failed to reset password');
     }
-  };
-  xhttp.open("PUT", "/api/reset_password", true);
-  let obj = JSON.stringify({"password":password});
-  xhttp.setRequestHeader("Content-Type", "application/json");
-  xhttp.send(obj);
+  } catch (error) {
+    console.error('Error:', error);
+  }
 }
 
 function show_toast(response) {
@@ -286,6 +307,53 @@ delete_pword_inp.addEventListener('input', function(){
   }
 })
 
+let backup_token_btn = document.getElementById('backup_token_btn')
+backup_token_btn.addEventListener('click', function(){
+  send_backup_request();
+})
 
-  
+function send_backup_request() {
+  fetch('/admin/api/backup', {
+    method: 'POST',
+  })
+  .then(response => {
+    if (response.status === 200) {
+      return response.blob();
+    } else {
+      throw new Error('Backup request failed');
+    }
+  })
+  .then(blob => {
+    let url = URL.createObjectURL(blob);
+    let link = document.createElement("a");
+    link.href = url;
+    link.download = "temp.zip";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    URL.revokeObjectURL(url);
+    document.body.removeChild(link);
+    send_clean_request();
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
 
+function send_clean_request() {
+  fetch('/admin/api/cleanup')
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Cleanup request failed');
+      }
+    })
+    .then(responseData => {
+      console.log('GET request successful:', responseData);
+    })
+    .catch(error => {
+      // Handle errors here, if needed
+      console.error('Error:', error);
+    });
+}

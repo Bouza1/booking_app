@@ -56,7 +56,7 @@ confirm_pword.addEventListener('input', function(){
 function check_passw(){
   let password_inp = document.getElementById('password_inp')
   let password_value = password_inp.value
-  let pword_reg_x = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$@!%&*?])[A-Za-z\d#$@!%&*?]{8,30}$/
+  let pword_reg_x = /^(?=.*[A-Z])(?=.*\d).{8,}$/
   if(password_value.match(pword_reg_x)){
     return true;
   } else {

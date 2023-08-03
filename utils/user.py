@@ -8,12 +8,13 @@ from string import Template
 import os 
 import base64
 
-def save_user(username, hashed_password, first_name, last_name):
+def save_user(username, hashed_password, first_name, last_name, role):
   id = aes_encrypt(username)
   f_name = aes_encrypt(first_name)
   l_name =aes_encrypt(last_name)
+  r = aes_encrypt(role)
   save_user_security(id, hashed_password)
-  save_user_details(id, f_name, l_name)
+  save_user_details(id, f_name, l_name, r)
 
 def generate_url_safe_variable():
     random_bytes = os.urandom(32)
@@ -49,7 +50,7 @@ def create_reset_obj(email):
   return {"E":obj_e, "D":obj_d}
 
 def format_link(url):
-  link = "https://tennisbooking.s4820791.repl.co/api/reset_link/" + url
+  link = "https://wsscctennis.co.uk/api/reset_link/" + url
   return link
 
 def format_html(url):
@@ -78,7 +79,7 @@ def send_reset_email(reset_obj):
 
 def reset_password(token, password):
   valid_token = return_valid_tokens(token)
-  email = aes_decrypt(valid_token[2])
+  email = valid_token[2]
   update_password(email, password)
   spend_token(token)
 

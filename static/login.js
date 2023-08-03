@@ -1,6 +1,3 @@
-
-/////// add validation so cant send till password and username filled!
-
 document.addEventListener("DOMContentLoaded", function() {
   set_page_height();
   if_message_to_dsiplay();
@@ -35,7 +32,7 @@ function set_page_height(){
   let login_container = document.getElementById('content-container')
   if(isMobileDevice()){
   } else {
-     page.setAttribute('class', "vh-100 align-items-middle justify-content-center")
+    page.setAttribute('class', "vh-100 align-items-middle justify-content-center")
     login_container.style.width = "50vw"
   }
 }
