@@ -1,5 +1,5 @@
-from utils.db import get_user_security, insert_reset_token, return_valid_tokens, update_password, spend_previous_tokens,  spend_token, save_user_security, save_user_details, delete_from_table
-from utils.config import aes_encrypt, aes_decrypt
+from utils.db_handler import get_user_security, insert_reset_token, return_valid_tokens, update_password, spend_previous_tokens,  spend_token, save_user_security, save_user_details, delete_from_table
+from utils.config import aes_encrypt
 from utils.email_template import template
 import smtplib
 from email.mime.multipart import MIMEMultipart

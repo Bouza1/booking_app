@@ -1,3 +1,5 @@
+import { if_message_to_dsiplay, show_toast, check_passw } from './main.js';
+
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('date').valueAsDate = new Date();
   set_min_max_dates();
@@ -5,16 +7,6 @@ document.addEventListener("DOMContentLoaded", function() {
   set_click_events();
   if_message_to_dsiplay();
 });
-
-function if_message_to_dsiplay(){
-  try {
-    let message = document.getElementById('message').innerText
-    let message_object = JSON.parse(message)
-    show_toast(message_object)
-  } catch(error){
-    console.log(error)
-  }
-}
 
 function return_user(){
   let user = document.getElementById('hidden_u').innerText;
@@ -46,6 +38,7 @@ async function get_times_from_server(date) {
       },
       body: JSON.stringify({ "date": date })
     });
+
     if (response.ok) {
       const content = await response.json();
       create_buttons(content['times'][0]);
@@ -53,6 +46,7 @@ async function get_times_from_server(date) {
       throw new Error('Failed to get times');
     }
   } catch (error) {
+    // Handle errors here, if needed
     console.error('Error:', error);
   }
 }
@@ -82,7 +76,7 @@ function create_buttons(times){
 }
 
 function set_button_state(button, booked){
-  user = return_user();
+  let user = return_user();
   if(booked === "0"){
     button.disabled = false;
     button.innerText = button.value;
@@ -100,7 +94,7 @@ function set_button_state(button, booked){
 
 //------------------------------------------- Send Booking To Server -------------------------------------------
 function set_click_events(){
-  buttons = return_button_array();
+  let buttons = return_button_array();
   for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener('click', function(){
       send_booking_to_server(this.id, this.innerText);
@@ -141,6 +135,7 @@ async function send_booking_to_server(time, cancel) {
       throw new Error('Failed to book slot');
     }
   } catch (error) {
+    // Handle errors here, if needed
     console.error('Error:', error);
   }
 }
@@ -220,17 +215,6 @@ function if_both(){
   }
 }
 
-function check_passw(element){
-  let password_inp = document.getElementById(element)
-  let password_value = password_inp.value
-  let pword_reg_x = /^(?=.*[A-Z])(?=.*\d).{8,}$/
-  if(password_value.match(pword_reg_x)){
-    return true;
-  } else {
-    return false;
-  }
-}
-
 function check_confirm_passw(){
   let password_inp = document.getElementById('new_pword').value
   let confirm_pass_inp = document.getElementById('confirm_pass_inp')
@@ -273,24 +257,11 @@ async function send_change_2_server() {
       throw new Error('Failed to reset password');
     }
   } catch (error) {
+    // Handle errors here, if needed
     console.error('Error:', error);
   }
 }
 
-function show_toast(response) {
-  let toastElement = document.getElementById("liveToast")
-  let classStr = "toast hide bg-" + response['type']
-  toastElement.setAttribute('class', classStr)
-  let toastTitle = document.getElementById('toast-title')
-  toastTitle.innerText = response['title']
-  let toastBody = document.getElementById("toast-body")
-  toastBody.innerHTML = ""
-  let p_tag = document.createElement('p')
-  p_tag.innerText = response['message']
-  toastBody.appendChild(p_tag)
-  const myToast = new bootstrap.Toast(toastElement);
-  myToast.show();
-}
 
 let delete_pword_inp = document.getElementById('delete_pword')
 delete_pword_inp.addEventListener('input', function(){
@@ -336,6 +307,7 @@ function send_backup_request() {
     send_clean_request();
   })
   .catch(error => {
+    // Handle errors here, if needed
     console.error('Error:', error);
   });
 }

@@ -10,9 +10,13 @@
 }
 
 .page-container{
-  max-height:100vhz;
+  min-height:80vh;
 }
 
 #hidden_u, #password_instructions, #confirm_pword_instructions, #delete_warning, #message{
   display:none;
+}
+
+.button-ctn {
+  min-height:70vh;
 }

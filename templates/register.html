@@ -85,7 +85,7 @@
         </div>
       </div>
     </div>
-    <!-- Modal -->
+    <!-- Terms & conditions modal -->
     <div class="modal fade" id="tnc_modal" tabindex="-1" aria-labelledby="tnc_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
       <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -103,10 +103,11 @@
         </div>
       </div>
     </div>    
+    <!-- toast -->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
       <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-          <strong class="me-auto">Account Creation</strong>
+          <strong class="me-auto" id="toast-title"></strong>
           <small>Just Now</small>
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
@@ -114,8 +115,8 @@
         </div>
       </div>
     </div>
-    
-    <script src="{{url_for('static', filename='register.js')}}"></script>
+    <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
+    <script type="module" src="{{url_for('static', filename='register.js')}}"></script>
   </body>
 </html>
 

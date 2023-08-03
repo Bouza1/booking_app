@@ -1,11 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from flask_bcrypt import Bcrypt
-import os 
-from utils.db import get_user_security, init_db, get_times_for_date, insert_booking_2_db, return_user_object, return_valid_tokens, update_password, return_all, drop_table
+from utils.db_handler import get_user_security, init_db, get_times_for_date, insert_booking_2_db, return_user_object, return_valid_tokens, update_password
 from utils.user import handle_email_reset, reset_password, save_user, handle_delete
 from utils.admin import output_backup, zip_folder, wipe_docs
 from utils.config import aes_encrypt, aes_decrypt
-
+import os 
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -74,7 +73,12 @@ def book_slot():
 def reset_details():
   if request.is_json:
     reset_object = request.get_json()
-  return handle_email_reset(reset_object['email'])
+  if handle_email_reset(reset_object['email']):
+    print("Send Email")
+    return {"message":"Please Check Your Email For Further Instructions.", "title":"Password Reset", "type":"success"}
+  else:
+    print("Don't Send Email")
+    return {"message":"No Account Found With These Details", "title":"Password Reset", "type":"danger"}
 
 @app.route("/api/reset_link/<reset_id>", methods=['GET'])
 def reset_link(reset_id):
@@ -129,7 +133,6 @@ def backup():
       return send_file(zip_folder(site_root), as_attachment=True)
     else:
       return render_template("booking.html", message={"type":"danger", "title":"Backup", "message":"Error Processing Backup"})
-      # Else: return incorrect IP
   return render_template("booking.html", message={"type":"danger", "title":"Insufficient Privileges", "message":"You Do Not Have The Correct Privileges Associated To This Account To Carry Out This Task"})
 
 @app.route("/admin/api/cleanup")

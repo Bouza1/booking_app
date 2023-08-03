@@ -36,7 +36,6 @@
           <img class="fifty-img" src="{{url_for('static', filename='tennis_ball.png')}}">
         </div>
 
-    
         <div id="fourty" class="w-100">
           <form method="POST" action="{{ url_for('login') }}" class="h-75 w-100">
             <div class="container d-flex flex-column justify-content-between align-items-middle h-100">
@@ -57,7 +56,7 @@
         </div>
       </div>
     </div>
-    <!-- Modal -->
+    <!-- Reset password modal -->
     <div class="modal fade" id="reset_modal" tabindex="-1" aria-labelledby="reset_modal" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
       <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content">
@@ -75,6 +74,7 @@
         </div>
       </div>
     </div>
+    <!-- toast -->
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
       <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -86,6 +86,7 @@
         </div>
       </div>
     </div>
-    <script src="{{url_for('static', filename='login.js')}}"></script>
+    <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
+    <script type="module" src="{{url_for('static', filename='login.js')}}"></script>
   </body>
 </html>
