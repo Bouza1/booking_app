@@ -6,7 +6,7 @@
 ## Description
 A light-weight, user-friendly tennis court booking application that enables users to easily log in and reserve tennis courts. The app streamlines the booking process and is built with a secure login system and an intuitive interface. Reserving a tennis court has never been simpler. 
 
-Please Visit: [www.wsscctennis.co.uk](https://www.wsscctennis.co.uk) to see the site in action.
+Please visit: [www.wsscctennis.co.uk](https://www.wsscctennis.co.uk) to see the site in action.
 
 ## Built With:
 - ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
@@ -28,7 +28,7 @@ Please Visit: [www.wsscctennis.co.uk](https://www.wsscctennis.co.uk) to see the 
 The use of an SQLite database brings with it some security flaws and vulnerabillites, for instance there is little to no access control. To mitigate these concerns and enhance the security of the database as a whole, a mitigation has been deployed. By encrypting all data stored within the database using the Advanced Encryption Standard (AES), it can be assured there is little value to any threat actors should the encrypted data be targetted.
 
 - Backups:
-The site is hosted via replit along with the SQLite database, albeit via a custom domain this simplistic approach presents a serious issue. Replit does not allow files to persist through deployments and therefore any data stored within the database is destroyed upon redeployment of the site. To mitigate this issue, a download route has been built into the application, the route only allows certain users access and includes several other preventative measure to it being exploited.
+The site is hosted through replit along with the SQLite database, albeit via a custom domain this simplistic approach presents a serious issue. Replit does not allow files to persist through deployments and therefore any data stored within the database is destroyed upon redeployment of the site. To mitigate this issue, a download route has been built into the application, the route only allows certain users access and includes several other preventative measure to it being exploited.
 
 ## Future Developments
 Following on from the issues mentioned above the next stage of development is to intergrate a PostgreSQL database and deploy to and EC2 instance on AWS, which will provide a much more robust system capable of persisting the database through deployments.
