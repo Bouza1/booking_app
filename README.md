@@ -23,11 +23,15 @@ Please Visit: [www.wsscctennis.co.uk](https://www.wsscctennis.co.uk) to see the 
 | <img src="https://github.com/Bouza1/booking_app/assets/97123953/bac1a9d7-37f9-4291-aa81-53d72ae9027e"> | <img src="https://github.com/Bouza1/booking_app/assets/97123953/dfc119be-1d63-4e41-88df-09511a7dac0d"> | 
 | <img src="https://github.com/Bouza1/booking_app/assets/97123953/0d97e34a-8bcd-4ef6-a8da-47393d8e6b85"> | <img src="https://github.com/Bouza1/booking_app/assets/97123953/5df92114-488d-4b4a-827f-4123a2faf4df"> |
 
-## Security:
-The use of an SQLite database brings with it some security flaws and vulnerabillites. To address these concerns and enhance the security of the data being stored, a mitigation approach has been adopted, which involves encrypting all data being stored by using the Advanced Encryption Standard (AES).
+## Issues & Mitigations:
+- Security:
+The use of an SQLite database brings with it some security flaws and vulnerabillites, for instance there is little to no access control. To mitigate these concerns and enhance the security of the database as a whole, a mitigation has been deployed. By encrypting all data stored within the database using the Advanced Encryption Standard (AES), it can be assured there is little value to any threat actors should the encrypted data be targetted.
+
+- Backups:
+The site is hosted via replit along with the SQLite database, albeit via a custom domain this simplistic approach presents a serious issue. Replit does not allow files to persist through deployments and therefore any data stored within the database is destroyed upon redeployment of the site. To mitigate this issue, a download route has been built into the application, the route only allows certain users access and includes several other preventative measure to it being exploited.
 
 ## Future Developments
-The next stage of development is to intergrate a PostgreSQL database and deploy to and EC2 instance on AWS.
+Following on from the issues mentioned above the next stage of development is to intergrate a PostgreSQL database and deploy to and EC2 instance on AWS, which will provide a much more robust system capable of persisting the database through deployments.
 
 
 
