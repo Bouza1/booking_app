@@ -6,7 +6,7 @@
 ## Description
 A light-weight, user-friendly tennis court booking application that enables users to easily log in and reserve tennis courts. The app streamlines the booking process and is built with a secure login system and an intuitive interface. Reserving a tennis court has never been simpler. 
 
-Please Visit: [www.wsscctennis.co.uk](https://www.wsscctennis.co.uk) to see the site in action.
+Please visit: [www.wsscctennis.co.uk](https://www.wsscctennis.co.uk) to see the site in action.
 
 ## Built With:
 - ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
