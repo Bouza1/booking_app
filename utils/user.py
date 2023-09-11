@@ -1,5 +1,5 @@
 from utils.db_handler import get_user_security, insert_reset_token, return_valid_tokens, update_password, spend_previous_tokens,  spend_token, save_user_security, save_user_details, delete_from_table
-from utils.config import aes_encrypt
+from utils.config import aes_encrypt, aes_decrypt
 from utils.email_template import template
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -30,9 +30,10 @@ def handle_email_reset(email):
     spend_previous_tokens(e['assigned'])
     insert_reset_token(e['id'], e['token'], e['assigned'])
     send_reset_email(d)
-    return {"message":"Please Check Your Email For Further Instructions.", "type":"success"}
+    return True
   else:
-    return {"message":"No Account Found With These Details", "type":"danger"}
+    return False
+
 
 def create_reset_obj(email):
   url = generate_url_safe_variable()

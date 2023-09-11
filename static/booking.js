@@ -2,6 +2,8 @@ import { if_message_to_dsiplay, show_toast, check_passw } from './main.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('date').valueAsDate = new Date();
+  disbale_all()
+  set_change_date_func()
   set_min_max_dates();
   get_times();
   set_click_events();
@@ -13,8 +15,14 @@ function return_user(){
   return user
 }
 
+function set_change_date_func(){
+  let date_inp = document.getElementById('date');
+  date_inp.addEventListener("change", get_times);
+}
+
 function get_times(){
-  var selectedDate = document.getElementById("date").value;
+  let selectedDate = document.getElementById("date").value;
+  disbale_all()
   get_times_from_server(selectedDate);
 }
 
@@ -92,13 +100,34 @@ function set_button_state(button, booked){
   }
 }
 
+function change_button_2_booked(id){
+  let button = document.getElementById(id);
+  button.disabled = false;
+  button.innerText = "Cancel";
+  button.setAttribute('class', 'btn btn-sm btn-warning text-light shadow w-100 book-btn');
+}
+
+function change_button_2_unbooked(id){
+  let button = document.getElementById(id);
+  button.disabled = false;
+  button.innerText = button.value;
+  button.setAttribute('class', 'btn btn-sm btn-primary shadow w-100 book-btn');
+}
+
 //------------------------------------------- Send Booking To Server -------------------------------------------
 function set_click_events(){
   let buttons = return_button_array();
   for(let i = 0; i < buttons.length; i++){
     buttons[i].addEventListener('click', function(){
       send_booking_to_server(this.id, this.innerText);
+      disbale_all()
     })
+  }
+}
+function disbale_all(){
+  let buttons = return_button_array()
+  for(let i = 0; i < buttons.length; i++){
+    buttons[i].disabled = true
   }
 }
 
@@ -119,7 +148,12 @@ function create_booking_object(time, cancel){
 
 async function send_booking_to_server(time, cancel) {
   let booking_obj = create_booking_object(time, cancel);
-  show_booking_toast(booking_obj);
+  if(cancel === "Cancel"){
+    change_button_2_unbooked(time)
+  } else {
+    change_button_2_booked(time)
+  }
+  
   try {
     const response = await fetch('/api/book_slot', {
       method: 'PUT',
@@ -131,6 +165,7 @@ async function send_booking_to_server(time, cancel) {
     if (response.ok) {
       const content = await response.json();
       get_times();
+      show_booking_toast(booking_obj);
     } else {
       throw new Error('Failed to book slot');
     }
@@ -277,55 +312,3 @@ delete_pword_inp.addEventListener('input', function(){
     final_delete_btn.disabled = true;
   }
 })
-
-let backup_token_btn = document.getElementById('backup_token_btn')
-backup_token_btn.addEventListener('click', function(){
-  send_backup_request();
-})
-
-function send_backup_request() {
-  fetch('/admin/api/backup', {
-    method: 'POST',
-  })
-  .then(response => {
-    if (response.status === 200) {
-      return response.blob();
-    } else {
-      throw new Error('Backup request failed');
-    }
-  })
-  .then(blob => {
-    let url = URL.createObjectURL(blob);
-    let link = document.createElement("a");
-    link.href = url;
-    link.download = "temp.zip";
-    link.style.display = "none";
-    document.body.appendChild(link);
-    link.click();
-    URL.revokeObjectURL(url);
-    document.body.removeChild(link);
-    send_clean_request();
-  })
-  .catch(error => {
-    // Handle errors here, if needed
-    console.error('Error:', error);
-  });
-}
-
-function send_clean_request() {
-  fetch('/admin/api/cleanup')
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('Cleanup request failed');
-      }
-    })
-    .then(responseData => {
-      console.log('GET request successful:', responseData);
-    })
-    .catch(error => {
-      // Handle errors here, if needed
-      console.error('Error:', error);
-    });
-}

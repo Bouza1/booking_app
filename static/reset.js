@@ -1,4 +1,4 @@
-import { set_page_height, check_passw } from './main.js';
+import { isMobileDevice, isIOS,  set_page_height, show_toast, check_passw, check_email } from './main.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   set_page_height();
