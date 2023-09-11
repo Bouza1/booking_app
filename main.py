@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, session, send_file
 from flask_bcrypt import Bcrypt
-from utils.db_handler import get_user_security, init_db, get_times_for_date, insert_booking_2_db, return_user_object, return_valid_tokens, update_password
+from utils.db_handler import get_user_security, get_times_for_date, insert_booking_2_db, return_user_object, return_valid_tokens, update_password, return_all, drop_table
 from utils.user import handle_email_reset, reset_password, save_user, handle_delete
-from utils.admin import output_backup, zip_folder, wipe_docs
 from utils.config import aes_encrypt, aes_decrypt
-import os 
+import os
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -33,11 +32,12 @@ def logout():
   session.clear()
   return redirect(url_for('login'))
 
-@app.route('/booking')
+@app.route('/booking', methods=['GET'])
 def booking():
-  if not session.get('logged_in'):
-    return redirect(url_for('login'))
-  return render_template('booking.html', username=aes_encrypt(session['username']), firstname=session['firstname'], role=session['role'])
+  if request.method == 'GET':
+    if not session.get('logged_in'):
+      return redirect(url_for('login'))
+    return render_template('booking.html', username=aes_encrypt(session['username']), firstname=session['firstname'], role=session['role'])
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -122,29 +122,6 @@ def delete_account():
         return render_template('booking.html', username=aes_encrypt(session['username']), firstname=session['firstname'], message= '{"type":"warning", "title":"Account Deletion", "message":"Incorrect Password Please Try Again."}')
     return {"message":"Deleted"}
 
-@app.route("/admin/api/backup", methods=["GET", "POST"])
-def backup():
-  if not session.get('logged_in'):
-    return redirect(url_for('login'))
-  else:
-    if request.method == 'POST' and session.get('role') == "admin" and request.headers['X-Forwarded-For'] == aes_decrypt(os.environ['ADMIN_IP']) :
-      site_root = os.path.realpath(os.path.dirname(__file__))
-      output_backup(site_root)
-      return send_file(zip_folder(site_root), as_attachment=True)
-    else:
-      return render_template("booking.html", message={"type":"danger", "title":"Backup", "message":"Error Processing Backup"})
-  return render_template("booking.html", message={"type":"danger", "title":"Insufficient Privileges", "message":"You Do Not Have The Correct Privileges Associated To This Account To Carry Out This Task"})
-
-@app.route("/admin/api/cleanup")
-def cleanup():
-  if not session.get('logged_in'):
-    return redirect(url_for('login'))
-  else:
-    if request.method == 'GET' and session.get('role') == "admin" and request.headers['X-Forwarded-For'] == aes_decrypt(os.environ['ADMIN_IP']):
-      site_root = os.path.realpath(os.path.dirname(__file__))
-      wipe_docs(site_root)
-  return render_template("booking.html")
 
 if __name__ == '__main__':
-  init_db()
   app.run(host='0.0.0.0', port=81)

@@ -1,4 +1,4 @@
-import { set_page_height, if_message_to_dsiplay, show_toast, check_passw, check_email } from './main.js';
+import { if_message_to_dsiplay, isMobileDevice, isIOS, show_toast, check_passw, check_email, set_page_height } from './main.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   set_page_height();
@@ -28,6 +28,7 @@ function check_username_pword(){
 let uname_reset_in = document.getElementById('username_reset')
 uname_reset_in.addEventListener('input', function(){
   let reset_btn = document.getElementById('reset_email_btn') 
+  let uname_value = uname_reset_in.value
   if(check_email('username_reset')){
     reset_btn.disabled = false;
   } else {

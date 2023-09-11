@@ -1,70 +1,18 @@
-import sqlite3
 import os
-from utils.config import aes_decrypt
-
-DATABASE = aes_decrypt(os.environ['DB_LOC'])
-
-def init_db():
-  conn = sqlite3.connect(DATABASE)
-  c = conn.cursor()
-  c.execute('''CREATE TABLE IF NOT EXISTS security
-  (id TEXT PRIMARY KEY,
-  password TEXT NOT NULL)''')
-  c.execute('''CREATE TABLE IF NOT EXISTS users
-  (id TEXT PRIMARY KEY,
-  first_name TEXT NOT NULL,
-  last_name TEXT NOT NULL,
-  role TEXT NOT NULL)''')
-  c.execute('''CREATE TABLE IF NOT EXISTS calender
-  (id INTEGER PRIMARY KEY AUTOINCREMENT,
-  date TEXT NOT NULL,
-  seven TEXT NOT NULL,
-  eight TEXT NOT NULL,
-  nine TEXT NOT NULL,               
-  ten TEXT NOT NULL,
-  eleven TEXT NOT NULL,               
-  twelve TEXT NOT NULL,
-  thirteen TEXT NOT NULL,               
-  fourteen TEXT NOT NULL,
-  fifteen TEXT NOT NULL,               
-  sixteen TEXT NOT NULL,
-  seventeen TEXT NOT NULL,
-  eighteen TEXT NOT NULL,
-  nineteen TEXT NOT NULL)''')
-  c.execute('''CREATE TABLE IF NOT EXISTS resets
-  (id TEXT PRIMARY KEY,
-  token TEXT NOT NULL,
-  assigned TEXT NOT NULL)''')
-  conn.commit()
-  conn.close()
-
-def reset_db():
-  drop_table('resets')
-  drop_table('security')
-  drop_table('calender')
-  drop_table('users')
-  init_db()
-
-def drop_table(table):
-  conn = sqlite3.connect(DATABASE)
-  c = conn.cursor()
-  drop_query = f"DROP TABLE IF EXISTS {table};"
-  c.execute(drop_query)
-  conn.close()
+import psycopg2
 
 def get_user_security(username):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("SELECT * FROM security WHERE id=?", (username,))
+  c.execute("SELECT * FROM security WHERE id = %s", (username,))
   user = c.fetchone()
   conn.close()
-  print(user)
   return user
 
 def get_user_details(username):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("SELECT * FROM users WHERE id=?", (username,))
+  c.execute("SELECT * FROM users WHERE id = %s", (username,))
   user = c.fetchone()
   conn.close()
   return user
@@ -79,30 +27,30 @@ def return_user_object(username):
   return user_obj
 
 def save_user_security(username, hashed_password):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("INSERT INTO security (id, password) VALUES (?, ?)", (username, hashed_password))
+  c.execute("INSERT INTO security (id, password) VALUES (%s, %s)", (username, hashed_password))
   conn.commit()
   conn.close()
 
 def save_user_details(id, first_name, last_name, role):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("INSERT INTO users (id, first_name, last_name, role) VALUES (?, ?, ?, ?)", (id,first_name, last_name, role))
+  c.execute("INSERT INTO users (id, first_name, last_name, role) VALUES (%s, %s, %s, %s)", (id, first_name, last_name, role))
   conn.commit()
   conn.close()
 
 def get_times(date):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("SELECT * FROM calender WHERE date = ?", (date,))
+  c.execute("SELECT * FROM calendar WHERE day = %s", (date,))
   results = c.fetchall()
   return results
 
 def if_date_doesnt_exist(date):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("INSERT INTO calender (date, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen) VALUES (?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)", (date,))
+  c.execute("INSERT INTO calendar (day, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seventeen, eighteen, nineteen) VALUES (%s, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)", (date,))
   conn.commit()
   conn.close()
 
@@ -133,8 +81,8 @@ def get_time_as_string(time):
   return big_time_obj[time]
 
 def insert_booking_2_db(date, time, username, cancel):
-  sql_statement = f"UPDATE calender SET {get_time_as_string(time)} = ? WHERE date = ?"
-  conn = sqlite3.connect(DATABASE)
+  sql_statement = f"UPDATE calendar SET {get_time_as_string(time)} = %s WHERE day = %s"
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
   if cancel == True:
     c.execute(sql_statement,("0", date))
@@ -144,43 +92,43 @@ def insert_booking_2_db(date, time, username, cancel):
   conn.close()
 
 def insert_reset_token(id, token, assigned):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("INSERT INTO resets (id, token, assigned) VALUES (?, ?, ?)", (id, token, assigned))  
+  c.execute("INSERT INTO resets (id, token, assigned) VALUES (%s, %s, %s)", (id, token, assigned))  
   conn.commit()
   conn.close()
 
 def return_valid_tokens(id):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("SELECT * FROM resets WHERE id = (?) AND token = 0", (id,))
+  c.execute("SELECT * FROM resets WHERE id = %s AND token = 0", (id,))
   results = c.fetchone()
   return results
 
 def update_password(user, password):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("UPDATE security SET password = (?) WHERE id = (?)",(password, user))
+  c.execute("UPDATE security SET password = %s WHERE id = %s",(password, user))
   conn.commit()
   conn.close()
 
 def spend_previous_tokens(assigned):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c .execute("SELECT id FROM resets WHERE assigned=?", (assigned,))
+  c.execute("SELECT id FROM resets WHERE assigned = %s", (assigned,))
   tokens = c.fetchall()
-  c.executemany("UPDATE resets SET token=1 WHERE id=?", tokens)
+  c.executemany("UPDATE resets SET token=1 WHERE id = %s", tokens)
   conn.commit()
 
 def spend_token(token):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute("UPDATE resets SET token=1 WHERE id = (?)", (token,))
+  c.execute("UPDATE resets SET token=1 WHERE id = %s", (token,))
   conn.commit()
   conn.close()
 
 def return_all(table):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
   select_query = f"SELECT * FROM {table};"
   c .execute(select_query)
@@ -188,9 +136,21 @@ def return_all(table):
   return rows
 
 def delete_from_table(table, username):
-  conn = sqlite3.connect(DATABASE)
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
   c = conn.cursor()
-  c.execute(f'DELETE FROM {table} WHERE id = ?', (username,))
+  c.execute(f'DELETE FROM {table} WHERE id = %s', (username,))
   conn.commit()
   conn.close()
 
+def reset_db():
+  drop_table('resets')
+  drop_table('security')
+  drop_table('calendar')
+  drop_table('users')
+
+def drop_table(table):
+  conn = psycopg2.connect(os.environ['DATABASE_URL'])
+  c = conn.cursor()
+  drop_query = f"DROP TABLE IF EXISTS {table};"
+  c.execute(drop_query)
+  conn.close()
