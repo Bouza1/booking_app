@@ -27,11 +27,8 @@ The database is built using PostgreSQL. The entitys and relationships are shown 
 <img src="https://github.com/Bouza1/booking_app/assets/97123953/45aa440c-988f-4094-a494-4fa4874dbb30">
 
 
-## Future Developments
-Following on from the issues mentioned above the next stage of development is to intergrate a PostgreSQL database and deploy to and EC2 instance on AWS, which will provide a much more robust system capable of persisting the database through deployments.
-
-
-
+## Password Reset Functionallity:
+<img src="https://github.com/Bouza1/booking_app/assets/97123953/507028d5-8396-461e-b7bf-a480be9996ec">
 
 
 
